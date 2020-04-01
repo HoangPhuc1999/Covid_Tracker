@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -64,27 +65,32 @@ public class Registration extends AppCompatActivity {
                 final String fullname = fullname_input.getText().toString();
                 final String password = password_input.getText().toString();
                 final String password_check = password_confirm.getText().toString();
-                if(isNameValid(fullname) == false)
+                if(!isNameValid(fullname))
                 {
                     fullname_input.requestFocus();
                     fullname_input.setError("Invalid Name");
+                    Toast.makeText(Registration.this, "Invalid Name", Toast.LENGTH_SHORT).show();
                 }
 
-                else if(!(password.equals(password_check))){
+                 if(!(password.equals(password_check))){
 
                     password_input.requestFocus();
                     password_confirm.setError("Password does not match");
-
+                    Toast.makeText(Registration.this, "Password does not match", Toast.LENGTH_SHORT).show();
                 }
-                else if(email == ""){
-
+                if (TextUtils.isEmpty(email)){
+                    //username is empty
                     email_input.requestFocus();
-                    email_input.setError("Invalid Name");
-
+                    email_input.setError("Invalid email");
+                    Toast.makeText(Registration.this, "Please enter username", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-                else {
-
-
+                if (TextUtils.isEmpty(password)){
+                    //password is empty
+                    password_input.requestFocus();
+                    password_input.setError("Invalid Password");
+                    Toast.makeText(Registration.this, "Please enter your password", Toast.LENGTH_SHORT).show();
+                }
 
 
 
@@ -132,7 +138,7 @@ public class Registration extends AppCompatActivity {
                             }
                         });
 
-                }
+
 
             }
         });
