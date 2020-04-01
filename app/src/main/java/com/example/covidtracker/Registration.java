@@ -19,6 +19,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Pattern;
+
 public class Registration extends AppCompatActivity {
 
     private EditText fullname_input, email_input, password_input, password_confirm;
@@ -62,13 +64,25 @@ public class Registration extends AppCompatActivity {
                 final String fullname = fullname_input.getText().toString();
                 final String password = password_input.getText().toString();
                 final String password_check = password_confirm.getText().toString();
+                if(isNameValid(fullname) == false)
+                {
+                    fullname_input.requestFocus();
+                    fullname_input.setError("Invalid Name");
+                }
 
-                if(!(password.equals(password_check))){
+                else if(!(password.equals(password_check))){
 
                     password_input.requestFocus();
                     password_confirm.setError("Password does not match");
 
-                }else {
+                }
+                else if(email == ""){
+
+                    email_input.requestFocus();
+                    email_input.setError("Invalid Name");
+
+                }
+                else {
 
 
 
@@ -129,7 +143,15 @@ public class Registration extends AppCompatActivity {
     }
 
 
+    public static boolean isNameValid(String name)
+    {
+        String nameRegex = "^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}";
 
+        Pattern pat = Pattern.compile(nameRegex);
+        if (name == null)
+            return false;
+        return pat.matcher(name).matches();
+    }
 
 
 

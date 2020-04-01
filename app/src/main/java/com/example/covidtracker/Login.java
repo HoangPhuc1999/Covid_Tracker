@@ -1,24 +1,37 @@
 package com.example.covidtracker;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
 
     private EditText email_input, password_input;
     private Button login_button, registration_button;
+    private FirebaseAuth authentication;
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
 
+        authentication = FirebaseAuth.getInstance();
         email_input = (EditText) findViewById(R.id.email_input);
         password_input = (EditText) findViewById(R.id.password_input);
 
@@ -34,8 +47,44 @@ public class Login extends AppCompatActivity {
             }
         });
 
+        login_button = (Button) findViewById(R.id.login_button);
+        login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
+                String email = email_input.getText().toString();
+                String password = password_input.getText().toString();
+
+
+
+                    authentication.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        Toast.makeText(Login.this, "Sign up Error", Toast.LENGTH_SHORT).show();
+                                    } else {
+
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        if (user != null) {
+                                            Intent intent = new Intent(Login.this, Map.class);
+                                            startActivity(intent);
+                                            finish();
+                                            return;
+                                        }
+
+                                    }
+
+
+                                }
+                            });
+
+
+
+
+            }
+        });
 
 
 
@@ -44,6 +93,24 @@ public class Login extends AppCompatActivity {
 
 
 
+
+
+    public boolean check_input_user(String email, String password){
+
+        if(email == null){
+            email_input.requestFocus();
+            email_input.setError("Invalid email");
+            return false;
+        }
+
+        if(password == null){
+            password_input.requestFocus();
+            password_input.setError("Invalid password");
+            return false;
+        }
+      return true;
+
+    }
 
 
 
