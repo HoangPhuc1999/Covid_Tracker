@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Sym extends AppCompatActivity {
     CheckBox cold, sore,breathe,cough;
@@ -22,7 +23,7 @@ public class Sym extends AppCompatActivity {
     Button submit;
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String user_id = user.getUid();
-    ArrayList<String> symptoms;
+
 
 
     @Override
@@ -61,6 +62,7 @@ public class Sym extends AppCompatActivity {
                     sore_check = true;
                 }
             }
+
         });
 
         breathe.setOnClickListener(new View.OnClickListener() {
@@ -78,26 +80,34 @@ public class Sym extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("Symptoms");
-//                if(cold_check){
-//                    symptoms.add("Cold");
-//                }
-//
-//                if(cough_check){
-//                    symptoms.add("Cough");;
-//                }
-//
-//                if(sore_check){
-//                    symptoms.add("Sore Throat");;
-//                }
-//
-//                if(breathe_check){
-//                    symptoms.add("Hard to breathe");;
-//                }
+
+                if (cold_check || cough_check || sore_check || breathe_check){
+                    ref.setValue(true);
+                }
 
 
 
-                ref.setValue(true);
+
+                DatabaseReference cold_ref = ref.child("Cold");
+                DatabaseReference cough_ref = ref.child("Cough");
+                DatabaseReference sore_ref =ref.child("Sore Throat");
+                DatabaseReference breathe_ref=ref.child("Hard to Breathe");
+
+                if(cold_check){
+                    cold_ref.setValue(true);
+                }
+                if(cough_check){
+                    cough_ref.setValue(true);
+                }
+                if(breathe_check){
+                    breathe_ref.setValue(true);
+                }
+                if(sore_check){
+                    sore_ref.setValue(true);
+                }
+
                 Intent intent = new Intent(Sym.this, MapsActivity.class);
                 startActivity(intent);
                 finish();
