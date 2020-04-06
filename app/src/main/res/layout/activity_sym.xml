@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Sym">
+
+    <CheckBox
+        android:id="@+id/cough"
+        android:layout_width="303dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="88dp"
+        android:text="Cough"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/cold"
+        android:layout_width="303dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="248dp"
+        android:text="Cold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/hard_to_breathe"
+        android:layout_width="303dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="164dp"
+        android:text="Hard to breathe"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/sore_throat"
+        android:layout_width="303dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="336dp"
+        android:text="Sorethroat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Submit"
+        android:layout_width="303dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="432dp"
+        android:text="Submit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
