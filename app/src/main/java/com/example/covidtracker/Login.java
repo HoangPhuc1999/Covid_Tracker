@@ -84,7 +84,7 @@ public class Login extends AppCompatActivity {
                                             if (user != null) {
                                                 // Check if the account email is verified
                                                 if(user.isEmailVerified()) {
-                                                    Intent intent = new Intent(Login.this, MapsActivity.class);
+                                                    Intent intent = new Intent(Login.this, PopupPrompt.class);
                                                     startActivity(intent);
                                                     finish();
                                                     return;

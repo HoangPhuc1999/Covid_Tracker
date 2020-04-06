@@ -121,7 +121,7 @@ public class Registration extends AppCompatActivity {
 
                                     String user_id = authentication.getCurrentUser().getUid();
                                     findViewById(R.id.registration_button).setEnabled(true);
-                                    DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(fullname).child("User_ID").child(user_id);
+                                    DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("User_Name").child(fullname);
                                     current_user_db.setValue(true);
 
                                     Toast.makeText(Registration.this, "Registration Successfully", Toast.LENGTH_LONG).show();
