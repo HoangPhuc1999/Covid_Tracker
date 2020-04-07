@@ -3,6 +3,7 @@ package com.example.covidtracker;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,6 +19,9 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 public class Login extends AppCompatActivity {
 
 
@@ -25,12 +29,14 @@ public class Login extends AppCompatActivity {
     private Button login_button, registration_button;
     private FirebaseAuth authentication;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    private static final int REQUEST_LOCATION = 123;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
+       // requestLocationPermission();
 
         authentication = FirebaseAuth.getInstance();
         email_input = (EditText) findViewById(R.id.email_input);
@@ -69,38 +75,31 @@ public class Login extends AppCompatActivity {
                     password_input.requestFocus();
                     password_input.setError("Invalid Password");
                     Toast.makeText(Login.this, "Please enter your password", Toast.LENGTH_SHORT).show();
-                }
+                }else {
 
-                        authentication.signInWithEmailAndPassword(email, password)
-                                .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<AuthResult> task) {
-                                        if (!task.isSuccessful()) {
-                                            Toast.makeText(Login.this, "Sign up Error", Toast.LENGTH_SHORT).show();
-                                        } else {
+                    authentication.signInWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (!task.isSuccessful()) {
+                                        Toast.makeText(Login.this, "Sign up Error", Toast.LENGTH_SHORT).show();
+                                    } else {
 
-                                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-                                            if (user != null) {
-                                                // Check if the account email is verified
-                                                if(user.isEmailVerified()) {
-                                                    Intent intent = new Intent(Login.this, PopupPrompt.class);
-                                                    startActivity(intent);
-                                                    finish();
-                                                    return;
-                                                }
-                                                else{
-                                                    Toast.makeText(Login.this, "Please verify your email", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-
+                                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                        if (user != null) {
+                                            Intent intent = new Intent(Login.this, MapsActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                            return;
                                         }
 
-
                                     }
-                                });
 
 
+                                }
+                            });
+
+                }
 
 
             }
@@ -110,7 +109,6 @@ public class Login extends AppCompatActivity {
 
 
     }
-
 
 
 
@@ -132,17 +130,6 @@ public class Login extends AppCompatActivity {
       return true;
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
